@@ -1,0 +1,39 @@
+@model MiniETBIS.Models.DTOs.CompanyDto
+@{
+    ViewData["Title"] = "Firma Detayý";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-building text-accent me-2"></i>@Model.Name</h2>
+    <p>Firma detay bilgileri</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="detail-card">
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>Vergi Numarasý</dt>
+                            <dd><code style="color:var(--accent)">@Model.TaxNumber</code></dd>
+                            <dt>Þehir</dt>
+                            <dd>@Model.City</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>Sektör</dt>
+                            <dd><span class="badge-soft badge-soft-indigo">@Model.Sector</span></dd>
+                            <dt>Kayýt Tarihi</dt>
+                            <dd>@Model.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a asp-action="Index" class="btn btn-ghost mt-3">
+            <i class="bi bi-arrow-left me-1"></i>Listeye Dön
+        </a>
+    </div>
+</div>

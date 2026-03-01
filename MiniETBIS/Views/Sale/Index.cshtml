@@ -1,0 +1,111 @@
+@model MiniETBIS.Models.DTOs.PagedResult<MiniETBIS.Models.DTOs.SaleDto>
+@{
+    ViewData["Title"] = "Satislarim";
+}
+
+<div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-2">
+    <div>
+        <h2><i class="bi bi-receipt text-accent me-2"></i>Satislarim</h2>
+        <p>Toplam <strong>@Model.TotalCount</strong> satis kaydi</p>
+    </div>
+    <a asp-action="Create" class="btn btn-accent btn-sm d-flex align-items-center gap-1">
+        <i class="bi bi-plus-lg"></i>Yeni Satis
+    </a>
+</div>
+
+<div class="filter-bar mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-auto">
+            <label class="form-label"><i class="bi bi-calendar-event me-1"></i>Baslangic</label>
+            <input type="date" name="startDate" value="@ViewBag.StartDate" class="form-control form-control-sm" />
+        </div>
+        <div class="col-auto">
+            <label class="form-label"><i class="bi bi-calendar-check me-1"></i>Bitis</label>
+            <input type="date" name="endDate" value="@ViewBag.EndDate" class="form-control form-control-sm" />
+        </div>
+        <div class="col-auto d-flex gap-2 align-items-end">
+            <button type="submit" class="btn btn-primary btn-sm">
+                <i class="bi bi-search me-1"></i>Filtrele
+            </button>
+            <a asp-action="Index" class="btn btn-ghost">Temizle</a>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Items.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        Bu aralikta satis bulunamadi.
+    </div>
+}
+else
+{
+    <div class="modern-table">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Urun</th>
+                    <th>Adet</th>
+                    <th>Toplam</th>
+                    <th>Sehir</th>
+                    <th>Tarih</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model.Items)
+                {
+                    <tr>
+                        <td class="fw-semibold" style="color:var(--text-primary)">@s.ProductName</td>
+                        <td><span class="badge-soft badge-soft-info">@s.Quantity adet</span></td>
+                        <td class="fw-semibold" style="color:var(--success)">@s.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("tr-TR"))</td>
+                        <td>@s.City</td>
+                        <td class="text-muted" style="font-size:0.8rem">@s.SaleDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@s.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('Bu satisi silmek istediginize emin misiniz?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber - 1)"
+                           asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i"
+                           asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">@i</a>
+                    </li>
+                }
+                @if (Model.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber + 1)"
+                           asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}

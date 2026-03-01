@@ -1,0 +1,74 @@
+@model MiniETBIS.Models.DTOs.PagedResult<MiniETBIS.Models.DTOs.ProductDto>
+@{
+    ViewData["Title"] = "Urunlerim";
+}
+
+<div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-2">
+    <div>
+        <h2><i class="bi bi-box-seam text-accent me-2"></i>Urunlerim</h2>
+        <p>Toplam <strong>@Model.TotalCount</strong> urun</p>
+    </div>
+    <a asp-action="Create" class="btn btn-accent btn-sm d-flex align-items-center gap-1">
+        <i class="bi bi-plus-lg"></i>Yeni Urun
+    </a>
+</div>
+
+@if (!Model.Items.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        Henuz urun eklemediniz.
+    </div>
+}
+else
+{
+    <div class="modern-table">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Urun Adi</th>
+                    <th>Kategori</th>
+                    <th>Fiyat</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Items)
+                {
+                    <tr>
+                        <td class="fw-semibold" style="color:var(--text-primary)">@p.Name</td>
+                        <td><span class="badge-soft badge-soft-indigo">@p.Category</span></td>
+                        <td class="fw-semibold">@p.Price.ToString("C2", new System.Globalization.CultureInfo("tr-TR"))</td>
+                        <td>
+                            <div class="d-flex gap-1 justify-content-end">
+                                <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form asp-action="Delete" asp-route-id="@p.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Bu urunu silmek istediginize emin misiniz?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}

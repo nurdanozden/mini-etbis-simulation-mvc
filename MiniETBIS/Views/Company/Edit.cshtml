@@ -1,0 +1,56 @@
+@model MiniETBIS.Models.DTOs.EditCompanyDto
+@{
+    ViewData["Title"] = "Firma Duzenle";
+}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-md-7 col-lg-6">
+        <div class="auth-card">
+            <div class="card-header" style="background:var(--warning)!important">
+                <i class="bi bi-pencil-square fs-2 d-block mb-2"></i>
+                <h4>Firma Duzenle</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <input asp-for="Id" type="hidden" />
+                    <div asp-validation-summary="ModelOnly" class="toast-alert toast-error"></div>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Firma Adi</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="City" class="form-label">Sehir</label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Sector" class="form-label">Sektor</label>
+                        <select asp-for="Sector" class="form-select">
+                            <option value="">-- Sektor Secin --</option>
+                            <option>Elektronik</option>
+                            <option>Giyim &amp; Moda</option>
+                            <option>Gida &amp; Icecek</option>
+                            <option>Kitap &amp; Kirtasiye</option>
+                            <option>Spor &amp; Outdoor</option>
+                            <option>Ev &amp; Dekorasyon</option>
+                            <option>Kozmetik &amp; Bakim</option>
+                            <option>Oyuncak &amp; Hobi</option>
+                            <option>Otomotiv</option>
+                            <option>Diger</option>
+                        </select>
+                        <span asp-validation-for="Sector" class="text-danger small"></span>
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 py-2">
+                        <i class="bi bi-check-lg me-1"></i>Guncelle
+                    </button>
+                    <a asp-action="MyCompany" class="btn btn-ghost w-100 mt-2">Iptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

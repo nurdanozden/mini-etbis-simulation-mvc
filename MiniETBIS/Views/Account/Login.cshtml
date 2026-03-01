@@ -1,0 +1,44 @@
+@model MiniETBIS.Models.DTOs.LoginDto
+@{
+    ViewData["Title"] = "Giris Yap";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-5 col-lg-4">
+        <div class="auth-card">
+            <div class="card-header">
+                <i class="bi bi-shield-lock fs-2 d-block mb-2"></i>
+                <h4>Giris Yap</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="toast-alert toast-error" role="alert"></div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">E-posta</label>
+                        <input asp-for="Email" class="form-control" placeholder="ornek@email.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Sifre</label>
+                        <input asp-for="Password" class="form-control" type="password" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label small">Beni Hatirla</label>
+                    </div>
+                    <button type="submit" class="btn btn-accent w-100 py-2">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Giris Yap
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer">
+                Hesabiniz yok mu? <a asp-action="Register" class="text-accent fw-semibold">Kayit olun</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

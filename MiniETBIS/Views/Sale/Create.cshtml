@@ -1,0 +1,45 @@
+@model MiniETBIS.Models.DTOs.CreateSaleDto
+@{
+    ViewData["Title"] = "Yeni Satis";
+}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-md-6 col-lg-5">
+        <div class="auth-card">
+            <div class="card-header" style="background:var(--success)!important">
+                <i class="bi bi-receipt fs-2 d-block mb-2"></i>
+                <h4>Yeni Satis Ekle</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="toast-alert toast-error"></div>
+                    <div class="mb-3">
+                        <label asp-for="ProductId" class="form-label">Urun</label>
+                        <select asp-for="ProductId" asp-items="ViewBag.Products" class="form-select">
+                            <option value="">-- Urun Secin --</option>
+                        </select>
+                        <span asp-validation-for="ProductId" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Quantity" class="form-label">Satis Miktari</label>
+                        <input asp-for="Quantity" class="form-control" type="number" min="1" />
+                        <span asp-validation-for="Quantity" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="City" class="form-label">Satis Sehri</label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger small"></span>
+                    </div>
+                    <button type="submit" class="btn w-100 py-2 text-white" style="background:var(--success)">
+                        <i class="bi bi-check-lg me-1"></i>Satisi Kaydet
+                    </button>
+                    <a asp-action="Index" class="btn btn-ghost w-100 mt-2">Iptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

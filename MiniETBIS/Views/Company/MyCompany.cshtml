@@ -1,0 +1,47 @@
+@model MiniETBIS.Models.DTOs.CompanyDto
+@{
+    ViewData["Title"] = "Firmam";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-building-check text-accent me-2"></i>Firmam</h2>
+    <p>Firma profil bilgileriniz</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="detail-card">
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>Firma Adi</dt>
+                            <dd>@Model.Name</dd>
+                            <dt>Vergi Numarasi</dt>
+                            <dd><code style="color:var(--accent)">@Model.TaxNumber</code></dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>Sehir</dt>
+                            <dd>@Model.City</dd>
+                            <dt>Sektor</dt>
+                            <dd><span class="badge-soft badge-soft-indigo">@Model.Sector</span></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="border-top pt-3 mt-2">
+                    <dl class="mb-0">
+                        <dt>Kayit Tarihi</dt>
+                        <dd class="mb-0">@Model.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy")</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="card-footer d-flex gap-2 p-3" style="background:var(--bg-surface-hover); border-top:1px solid var(--border-subtle)">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">
+                    <i class="bi bi-pencil me-1"></i>Duzenle
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

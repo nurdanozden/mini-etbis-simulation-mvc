@@ -1,0 +1,129 @@
+@model MiniETBIS.Models.DTOs.PagedResult<MiniETBIS.Models.DTOs.CompanyDto>
+@{
+    ViewData["Title"] = "Firmalar";
+}
+
+<div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-2">
+    <div>
+        <h2><i class="bi bi-buildings text-accent me-2"></i>Firmalar</h2>
+        <p>Kayitli <strong>@Model.TotalCount</strong> firma listeleniyor</p>
+    </div>
+    <a asp-action="AdminCreate" class="btn btn-accent btn-sm d-flex align-items-center gap-1">
+        <i class="bi bi-plus-lg"></i>Yeni Firma
+    </a>
+</div>
+
+<div class="filter-bar mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label"><i class="bi bi-funnel me-1"></i>Sektor</label>
+            <select name="sector" class="form-select form-select-sm">
+                <option value="">Tum Sektorler</option>
+                @if (ViewBag.Sectors != null)
+                {
+                    foreach (string s in ViewBag.Sectors)
+                    {
+                        <option value="@s" selected="@(ViewBag.SelectedSector == s)">@s</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label"><i class="bi bi-geo-alt me-1"></i>Sehir</label>
+            <select name="city" class="form-select form-select-sm">
+                <option value="">Tum Sehirler</option>
+                @if (ViewBag.Cities != null)
+                {
+                    foreach (string c in ViewBag.Cities)
+                    {
+                        <option value="@c" selected="@(ViewBag.SelectedCity == c)">@c</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm flex-fill">
+                <i class="bi bi-search me-1"></i>Filtrele
+            </button>
+            <a asp-action="Index" class="btn btn-ghost flex-fill">Temizle</a>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Items.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        Filtreye uygun firma bulunamadi.
+    </div>
+}
+else
+{
+    <div class="modern-table">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Firma Adi</th>
+                    <th>Vergi No</th>
+                    <th>Sehir</th>
+                    <th>Sektor</th>
+                    <th>Kayit</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sira = (Model.PageNumber - 1) * Model.PageSize + 1; }
+                @foreach (var c in Model.Items)
+                {
+                    <tr>
+                        <td class="text-muted">@(sira++)</td>
+                        <td class="fw-semibold" style="color:var(--text-primary)">@c.Name</td>
+                        <td><code style="font-size:0.8rem; color:var(--accent)">@c.TaxNumber</code></td>
+                        <td>@c.City</td>
+                        <td><span class="badge-soft badge-soft-muted">@c.Sector</span></td>
+                        <td class="text-muted" style="font-size:0.8rem">@c.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye me-1"></i>Detay
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber - 1)"
+                       asp-route-sector="@ViewBag.SelectedSector" asp-route-city="@ViewBag.SelectedCity">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i"
+                       asp-route-sector="@ViewBag.SelectedSector" asp-route-city="@ViewBag.SelectedCity">@i</a>
+                </li>
+            }
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber + 1)"
+                       asp-route-sector="@ViewBag.SelectedSector" asp-route-city="@ViewBag.SelectedCity">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
