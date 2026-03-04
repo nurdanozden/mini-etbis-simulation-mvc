@@ -24,4 +24,20 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MiniETBIS\Controllers\" />
+    <Folder Include="MiniETBIS\Data\" />
+    <Folder Include="MiniETBIS\Mappings\" />
+    <Folder Include="MiniETBIS\Models\DTOs\" />
+    <Folder Include="MiniETBIS\Repositories\" />
+    <Folder Include="MiniETBIS\Services\" />
+    <Folder Include="MiniETBIS\Validators\" />
+    <Folder Include="MiniETBIS\Views\Account\" />
+    <Folder Include="MiniETBIS\Views\AuditLog\" />
+    <Folder Include="MiniETBIS\Views\Company\" />
+    <Folder Include="MiniETBIS\Views\Dashboard\" />
+    <Folder Include="MiniETBIS\Views\Product\" />
+    <Folder Include="MiniETBIS\Views\Sale\" />
+  </ItemGroup>
+
 </Project>
