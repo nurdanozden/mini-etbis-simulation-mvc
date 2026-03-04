@@ -1,3 +1,7 @@
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Architecture](https://img.shields.io/badge/Architecture-Layered-green)
+
 # Mini ETBİS Simulation Platform
 
 ASP.NET Core MVC based e-commerce regulatory data collection and analytics system inspired by public regulatory platforms.
