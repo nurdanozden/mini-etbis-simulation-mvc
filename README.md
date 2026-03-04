@@ -62,8 +62,16 @@ The system collects company and sales data, processes it, and generates analytic
 - Chart.js
 
 ## 📸 Screenshots
-(Screenshots will be added here)
-  
+### Dashboard
+![Dashboard](admin-dashboard.png)
+![Dashboard](firma-dashboard.png)
+### Login
+![Login](login.png)
+### Sales Panel
+![Sales](firma-satislarim.png)
+### Company
+![Sales](admin-firmalar.png)
+
 ## 🚀 Setup Instructions
 ```bash
 git clone https://github.com/yourusername/mini-etbis-simulation-mvc.git
