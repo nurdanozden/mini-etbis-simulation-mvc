@@ -11,7 +11,9 @@ using Serilog;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("logs/miniETBIS-.log", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("logs/miniETBIS-.log", rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 7,
+        shared: true)
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -73,11 +75,17 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
-    var db = services.GetRequiredService<AppDbContext>();
-    await db.Database.MigrateAsync();
-
-    await SeedDataAsync(services);
+    try
+    {
+        var db = services.GetRequiredService<AppDbContext>();
+        await db.Database.MigrateAsync();
+        await SeedDataAsync(services);
+    }
+    catch (Exception ex)
+    {
+        Log.Fatal(ex, "Veritabani baslatma sirasinda kritik hata olustu");
+        throw;
+    }
 }
 
 if (!app.Environment.IsDevelopment())
@@ -86,7 +94,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// HTTPS redirect sadece development'ta - container ortaminda sertifika olmaz
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

@@ -16,10 +16,11 @@ WORKDIR /app
 
 COPY --from=build /app/publish .
 
-# Render varsayilan olarak PORT=10000 atar
+# Logs klasorunu olustur
+RUN mkdir -p /app/logs
+
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_HTTP_PORTS=10000
 
+# Render runtime'da PORT degiskenini atar, shell formu ile dinamik okunur
 EXPOSE 10000
-
-ENTRYPOINT ["dotnet", "MiniETBIS.dll"]
+CMD ASPNETCORE_HTTP_PORTS=$PORT dotnet MiniETBIS.dll
