@@ -1,0 +1,10 @@
+**/.git
+**/.vs
+**/bin
+**/obj
+**/logs
+**/.Agent
+**/node_modules
+**/*.user
+**/Readmi.md
+**/README.md
