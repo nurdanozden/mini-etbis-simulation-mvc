@@ -5,6 +5,38 @@
 
 <div class="row justify-content-center mt-4">
     <div class="col-md-5 col-lg-4">
+
+        {{-- Demo hesap bilgileri --}}
+        <div class="mb-3 p-3 rounded-3 border" style="background:var(--accent-soft); border-color:var(--accent-medium) !important;">
+            <p class="fw-semibold mb-2 small" style="color:var(--accent);">
+                <i class="bi bi-info-circle me-1"></i>Demo Hesaplar
+            </p>
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="small">
+                        <span class="badge me-1" style="background:var(--accent);">Admin</span>
+                        <span class="text-muted">admin@miniETBIS.com</span>
+                    </div>
+                    <button type="button" class="btn btn-sm py-0 px-2"
+                            style="background:var(--accent-medium); color:var(--accent); font-size:0.75rem;"
+                            onclick="fillLogin('admin@miniETBIS.com','Admin123!')">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Doldur
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="small">
+                        <span class="badge me-1 text-white" style="background:#6b7280;">Firma</span>
+                        <span class="text-muted">firma1@miniETBIS.com</span>
+                    </div>
+                    <button type="button" class="btn btn-sm py-0 px-2"
+                            style="background:var(--accent-medium); color:var(--accent); font-size:0.75rem;"
+                            onclick="fillLogin('firma1@miniETBIS.com','Firma123!')">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Doldur
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="auth-card">
             <div class="card-header">
                 <i class="bi bi-shield-lock fs-2 d-block mb-2"></i>
@@ -41,4 +73,10 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        function fillLogin(email, password) {
+            document.getElementById('Email').value = email;
+            document.getElementById('Password').value = password;
+        }
+    </script>
 }
