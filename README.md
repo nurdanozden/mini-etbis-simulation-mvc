@@ -6,6 +6,8 @@
 
 ASP.NET Core MVC based e-commerce regulatory data collection and analytics system inspired by public regulatory platforms.
 
+(E-ticaret süreçleri, güvenli ödeme simülasyonları ve uçtan uca veri akış yönetimi tasarımı.)
+
 ## 🚀 Project Overview
 Mini ETBİS Simulation Platform is a role-based e-commerce data reporting and analytics system that simulates a public regulatory infrastructure.
 The system collects company and sales data, processes it, and generates analytical insights via dashboard visualizations.
